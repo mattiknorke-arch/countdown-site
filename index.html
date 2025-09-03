@@ -5,7 +5,6 @@
 <title>AIDA Countdown</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  /* Grundlayout */
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
@@ -15,115 +14,76 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, #00c3ff, #ffff1c);
-    color: #fff;
     text-align: center;
-    overflow: hidden;
+    background: linear-gradient(to bottom, #00c3ff, #00aaff, #ffffff); /* Himmel/Meer */
+    color: #fff;
   }
 
   h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
   }
 
   #countdown {
     font-size: 3em;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-    word-break: break-word;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
   }
 
   #message {
     font-size: 1.8em;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
-  }
-
-  /* Wellen-Animation */
-  .waves-container {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 120px;
-    display: flex;
-  }
-
-  .wave {
-    background: url('https://i.imgur.com/0Q4sT9v.png') repeat-x;
-    width: 100%;
-    height: 120px;
-    animation: waveMove 4s linear infinite;
-  }
-
-  @keyframes waveMove {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
   }
 
   /* Responsive Anpassungen */
   @media (max-width: 768px) {
-    h1 {
-      font-size: 2em;
-      margin: 15px;
-    }
-
-    #countdown {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-    }
-
-    #message {
-      font-size: 1.4em;
-      margin: 0 10px;
-    }
-
-    .waves-container {
-      height: 80px;
-    }
-
-    .wave {
-      height: 80px;
-    }
+    h1 { font-size: 2em; }
+    #countdown { font-size: 2.2em; }
+    #message { font-size: 1.4em; }
   }
 
   @media (max-width: 480px) {
-    h1 {
-      font-size: 1.5em;
-    }
-
-    #countdown {
-      font-size: 1.8em;
-    }
-
-    #message {
-      font-size: 1.2em;
-    }
-
-    .waves-container {
-      height: 60px;
-    }
-
-    .wave {
-      height: 60px;
-    }
+    h1 { font-size: 1.5em; }
+    #countdown { font-size: 1.8em; }
+    #message { font-size: 1.2em; }
   }
 </style>
 </head>
 <body>
-<h1>Countdown bis zu unserem AIDA-Urlaub! 🚢🌴</h1>
-<div id="countdown"></div>
-<div id="message"></div>
+  <h1>Countdown bis zu unserem AIDA-Urlaub! 🚢🌴</h1>
+  <div id="countdown">Lädt…</div>
+  <div id="message"></div>
 
-<script>
-  const targetDate = new Date("September 6, 2025 10:00:00").getTime();
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const targetDate = new Date("September 6, 2025 10:00:00").getTime();
+      const countdownEl = document.getElementById("countdown");
+      const messageEl = document.getElementById("message");
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
 
-    const countdownEl = document.getElementById("countdown");
-    const messageEl = document.getElementById("message");
+        if (distance <= 0) {
+          countdownEl.style.display = 'none';
+          messageEl.innerHTML = "🎉 Es geht los! Auf in den AIDA-Urlaub! 🚢🌞";
+          return;
+        }
 
-    if (distance <= 0) {
-      countdownEl.style.display = 'non
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownEl.innerHTML =
+          days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
+  </script>
+</body>
+</html>
