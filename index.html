@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>AIDA Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+  /* Grundlayout */
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,6 +31,7 @@
     font-size: 3em;
     margin-bottom: 30px;
     text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    word-break: break-word;
   }
 
   #message {
@@ -37,7 +40,7 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
   }
 
-  /* Wellen-Container */
+  /* Wellen-Animation */
   .waves-container {
     position: absolute;
     bottom: 0;
@@ -57,6 +60,54 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
+
+  /* Responsive Anpassungen */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2em;
+      margin: 15px;
+    }
+
+    #countdown {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    #message {
+      font-size: 1.4em;
+      margin: 0 10px;
+    }
+
+    .waves-container {
+      height: 80px;
+    }
+
+    .wave {
+      height: 80px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5em;
+    }
+
+    #countdown {
+      font-size: 1.8em;
+    }
+
+    #message {
+      font-size: 1.2em;
+    }
+
+    .waves-container {
+      height: 60px;
+    }
+
+    .wave {
+      height: 60px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -75,27 +126,4 @@
     const messageEl = document.getElementById("message");
 
     if (distance <= 0) {
-      countdownEl.style.display = 'none';
-      messageEl.innerHTML = "🎉 Es geht los! Auf in den AIDA-Urlaub! 🚢🌞";
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    countdownEl.innerHTML =
-      days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-  }
-
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-</script>
-
-<div class="waves-container">
-  <div class="wave"></div>
-</div>
-
-</body>
-</html>
+      countdownEl.style.display = 'non
