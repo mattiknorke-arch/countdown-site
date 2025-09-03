@@ -2,30 +2,60 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Countdown</title>
+  <title>AIDA Countdown</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #111;
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
+      background: linear-gradient(to bottom, #00c3ff, #ffff1c); /* Himmel & Sonne */
+      color: #fff;
+      text-align: center;
     }
+
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
     }
+
     #countdown {
       font-size: 3em;
-      margin-top: 20px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    }
+
+    #message {
+      font-size: 1.8em;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .waves {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+      background: url('https://i.imgur.com/0Q4sT9v.png') repeat-x;
+      background-size: cover;
+      animation: wave 4s linear infinite;
+    }
+
+    @keyframes wave {
+      0% { background-position-x: 0; }
+      100% { background-position-x: 1000px; }
     }
   </style>
 </head>
 <body>
-  <h1>Countdown bis zum 6. September 2025, 10:00 Uhr</h1>
+  <h1>Countdown bis zu unserem AIDA-Urlaub! 🚢🌴</h1>
   <div id="countdown"></div>
+  <div id="message"></div>
 
   <script>
     const targetDate = new Date("September 6, 2025 10:00:00").getTime();
@@ -34,8 +64,12 @@
       const now = new Date().getTime();
       const distance = targetDate - now;
 
+      const countdownEl = document.getElementById("countdown");
+      const messageEl = document.getElementById("message");
+
       if (distance <= 0) {
-        document.getElementById("countdown").innerHTML = "🎉 Zeit ist abgelaufen!";
+        countdownEl.style.display = 'none';
+        messageEl.innerHTML = "🎉 Es geht los! Auf in den AIDA-Urlaub! 🚢🌞";
         return;
       }
 
@@ -44,11 +78,15 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countdown").innerHTML =
+      countdownEl.innerHTML =
         days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
     }
 
     setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
+
+  <div class="waves"></div>
 </body>
 </html>
+
